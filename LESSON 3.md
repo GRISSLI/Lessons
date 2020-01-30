@@ -5,7 +5,57 @@
 На поле ввода накладывается маска вида /^[A-я]+\s[A-я]+$/gm всё что выпадает за пределы формата не должно вводится  
   
 В качестве исходных данных предоставляет кусок работающего кода 
-скачать его можно здесь: [Download](https://github.com/GRISSLI/Lessons/raw/master/JSON.zip)
+<details>
+  <summary>
+    Посмотреть код
+  </summary>
+
+  ```js
+import russian_names from '@/data/russian_names.json'
+import russian_surnames from '@/data/russian_surnames.json'
+
+export default {
+  data: () => ({
+    loading: true
+  }),
+  methods: {
+    getDataNamesFromAPI(query) {
+      return new Promise((resolve, reject) => {
+        const items = this.dataNamesFromDB().find((e) => e.Name === query)
+        setTimeout(() => {
+          this.loading = false
+          resolve({
+            items
+          })
+        }, 1000)
+      })
+    },
+    getDataSureNamesFromAPI(query) {
+      return new Promise((resolve, reject) => {
+        const items = this.dataSurenamesFromDB().find(
+          (e) => e.Surname === query
+        )
+        setTimeout(() => {
+          this.loading = false
+          resolve({
+            items
+          })
+        }, 1000)
+      })
+    },
+    dataNamesFromDB() {
+      return russian_names
+    },
+    dataSurenamesFromDB() {
+      return russian_surnames
+    }
+  }
+}
+  ```
+</details>
+
+
+данные для импорта в этот код можно скачать здесь: [Download](https://github.com/GRISSLI/Lessons/raw/master/JSON.zip)
 (который нужно оставить без изменений и использовать в своем проекте для получения данных)  
   
 У поля поиска существуют модификаторы в виде чекбоксов  
